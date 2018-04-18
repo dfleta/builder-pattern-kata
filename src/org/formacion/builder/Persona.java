@@ -20,6 +20,13 @@ public class Persona {
 	 * Static member class is not an Inner class:
 	 * is a nested top-level class
 	 * Cap. 2 Inner clases, pag 51 libro Beginnnig Java 8 languaje features
+	 * Esto significa que puede ser utilizada fuera de Persona a traves de su
+	 * nombre "Builder" sin la dependencia Persona.Builder, tan solo importando
+	 * su tipo: 
+	 * import org.formacion.builder.Persona.Builder;
+	 * Si no fuese estatica, esto no seria posible, ya que habria que crear
+	 * una instancia de la clase Persona antes de crear una instancia de la
+	 * clase Builder
 	 */
 
 	public static class Builder {
@@ -47,7 +54,13 @@ public class Persona {
 			if (edad >= 18) throw new IllegalArgumentException("es mayor de edad " + edad);
 			persona.edad = edad;
 			persona.lugarTrabajo = null;
-			return new BuilderMenor(persona);
+			/**
+			 * BuilderMenor es inner class (no es static)
+			 * Para crear una instancia de BuilderMenor
+			 * antes ha de crearse una instancia de la clase Persona
+			 * que la contiene
+			 */	
+			return persona.new BuilderMenor(persona);
 		}
 
 		public Persona build() {
@@ -75,7 +88,15 @@ public class Persona {
 
 	}
 
-	public static class BuilderMenor {
+	/**
+	 * Ahora hacemos una inner class con BuilderMenor
+	 * (sin static)
+	 * Esto implica que para crear una instancia de BuilderMenor
+	 * antes ha de crearse una instancia de la clase Persona
+	 * que la contiene
+	 */
+
+	public class BuilderMenor {
 
 		private Persona personaMenor;
 
