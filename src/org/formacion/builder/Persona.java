@@ -43,12 +43,11 @@ public class Persona {
 			return new BuilderMayor(persona);
 		}
 		
-		public Builder setMenor(int edad, String colegio) {
+		public BuilderMenor setMenor(int edad) {
 			if (edad >= 18) throw new IllegalArgumentException("es mayor de edad " + edad);
 			persona.edad = edad;
-			persona.colegio = colegio;
 			persona.lugarTrabajo = null;
-			return this;
+			return new BuilderMenor(persona);
 		}
 
 		public Persona build() {
@@ -73,6 +72,26 @@ public class Persona {
 		public Persona build() {
 			return personaAdulta;
 		}
+
+	}
+
+	public static class BuilderMenor {
+
+		private Persona personaMenor;
+
+		public BuilderMenor(Persona persona) {
+			personaMenor = persona;
+		}
+
+		public BuilderMenor setColegio(String colegio) {
+			personaMenor.colegio = colegio;
+			return this;
+		}
+
+		public Persona build() {
+			return personaMenor;
+		}
+
 	}
 	
 }
